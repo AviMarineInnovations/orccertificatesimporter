@@ -1,20 +1,23 @@
 package in.avimarine.orccertificatesimporter;
 
 import android.util.Log;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * This file is part of an Avi Marine Innovations project: RaceCommittee first created by aayaffe on
@@ -147,10 +150,5 @@ public class ORCCertsImporter {
     Node node = nodeList.item(0);
     return node.getNodeValue();
   }
-
-
-
-
-
 
 }
