@@ -23,7 +23,6 @@ public class ORCCertsImporterTest {
     oci.getCert("Lou of Ixopo", "", "", new CertsResponse() {
       @Override
       public void response(List<ORCCertObj> ret) {
-        Assert.fail();
         Assert.assertEquals(1,ret.size());
       }
     });

@@ -47,7 +47,7 @@ public class ORCCertsImporter {
 
             for (int i=0; i<certsJson.length(); i++) {
               JSONObject jo = certsJson.getJSONObject(i);
-              ORCCertObj cert = convertORCJsonToORCCertObj(jo);
+              ORCCertObj cert = ORCCertObj.fromJSON(jo);
               ret.add(cert);
             }
 
@@ -129,7 +129,7 @@ public class ORCCertsImporter {
 
             for (int i=0; i<certsJson.length(); i++) {
               JSONObject jo = certsJson.getJSONObject(i);
-              ORCCertObj cert = convertORCJsonToORCCertObj(jo);
+              ORCCertObj cert = ORCCertObj.fromJSON(jo);
               ret.add(cert);
             }
             cr.response(ret);
@@ -148,50 +148,7 @@ public class ORCCertsImporter {
     Node node = nodeList.item(0);
     return node.getNodeValue();
   }
-  @Nullable
-  static private ORCCertObj convertORCJsonToORCCertObj(JSONObject jo) {
-    if (jo == null)
-      return null;
-    ORCCertObj ret = new ORCCertObj();
-    try{
-      ret.setNatAuth(jo.getString("NatAuth"));
-      ret.setCertNo(jo.getString("CertNo"));
-      ret.setRefNo(jo.getString("RefNo"));
-      ret.setSailNo(jo.getString("SailNo"));
-      ret.setYachtsName(jo.getString("YachtName"));
-      ret.setYachtsClass(jo.getString("Class"));
-      ret.setCertType(ORCCertificateType.fromString(jo.getString("C_Type")));
-      ret.setDivision(jo.getString("Division"));
-      Date date1=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'").parse(jo.getString("IssueDate"));
-      ret.setIssueDate(date1);
-      ret.setAgeYear(jo.getInt("Age_Year"));
-      ret.setLOA(jo.getDouble("LOA"));
-      ret.setCDL(jo.getDouble("CDL"));
-      ret.setTMFInshore(jo.getDouble("TMF_Inshore"));
-      ret.setTMFOffshore(jo.getDouble("TMF_Offshore"));
-      ret.setILCWA(jo.getDouble("ILCWA"));
-      ret.setOSN(jo.getDouble("OSN"));
-      ret.setTNInshoreLow(jo.getDouble("TN_Inshore_Low"));
-      ret.setTNInshoreMedium(jo.getDouble("TN_Inshore_Medium"));
-      ret.setTNInshoreHigh(jo.getDouble("TN_Inshore_High"));
-      ret.setTNOffshoreLow(jo.getDouble("TN_Offshore_Low"));
-      ret.setTNOffshoreMedium(jo.getDouble("TN_Offshore_Medium"));
-      ret.setTNOffshoreHigh(jo.getDouble("TN_Offshore_High"));
-      ret.setTNDInshoreLow(jo.getDouble("TND_Inshore_Low"));
-      ret.setTNDInshoreMedium(jo.getDouble("TND_Inshore_Medium"));
-      ret.setTNDInshoreHigh(jo.getDouble("TND_Inshore_High"));
-      ret.setTNDOffshoreLow(jo.getDouble("TND_Offshore_Low"));
-      ret.setTNDOffshoreMedium(jo.getDouble("TND_Offshore_Medium"));
-      ret.setTNDOffshoreHigh(jo.getDouble("TND_Offshore_High"));
 
-
-    }catch (Exception e){
-      Log.e(TAG,"Error converting json to cert",e);
-      return null;
-    }
-
-    return ret;
-  }
 
 
 

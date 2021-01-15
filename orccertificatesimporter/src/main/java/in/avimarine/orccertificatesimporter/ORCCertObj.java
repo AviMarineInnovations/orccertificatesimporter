@@ -1,6 +1,13 @@
 package in.avimarine.orccertificatesimporter;
 
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 /**
  * This file is part of an
@@ -8,6 +15,7 @@ import java.util.Date;
  * first created by aayaffe on 26/07/2018.
  */
 public class ORCCertObj {
+  private static final String TAG = "ORCCertObj";
   private String NatAuth;
   private String CertNo;
   private String RefNo;
@@ -36,6 +44,7 @@ public class ORCCertObj {
   private double TNDInshoreLow;
   private double TNDInshoreMedium;
   private double TNDInshoreHigh;
+  private ORCAllowancesObj Allowances;
 
   public String getNatAuth() {
     return NatAuth;
@@ -259,5 +268,81 @@ public class ORCCertObj {
 
   public void setTNDInshoreHigh(double TNDInshoreHigh) {
     this.TNDInshoreHigh = TNDInshoreHigh;
+  }
+
+  public ORCAllowancesObj getAllowances() {
+    return Allowances;
+  }
+
+  public void setAllowances(ORCAllowancesObj allowances) {
+    Allowances = allowances;
+  }
+
+
+
+  @Nullable
+  static public ORCCertObj fromJSON(JSONObject jo) {
+    if (jo == null)
+      return null;
+    ORCCertObj ret = new ORCCertObj();
+    try{
+      ret.setNatAuth(jo.getString("NatAuth"));
+      ret.setCertNo(jo.getString("CertNo"));
+      ret.setRefNo(jo.getString("RefNo"));
+      ret.setSailNo(jo.getString("SailNo"));
+      ret.setYachtsName(jo.getString("YachtName"));
+      ret.setYachtsClass(jo.getString("Class"));
+      ret.setCertType(ORCCertificateType.fromString(jo.getString("C_Type")));
+      ret.setDivision(jo.getString("Division"));
+      Date date1=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'").parse(jo.getString("IssueDate"));
+      ret.setIssueDate(date1);
+      ret.setAgeYear(jo.getInt("Age_Year"));
+      ret.setLOA(jo.getDouble("LOA"));
+      ret.setCDL(jo.getDouble("CDL"));
+      ret.setTMFInshore(jo.getDouble("TMF_Inshore"));
+      ret.setTMFOffshore(jo.getDouble("TMF_Offshore"));
+      ret.setILCWA(jo.getDouble("ILCWA"));
+      ret.setOSN(jo.getDouble("OSN"));
+      ret.setTNInshoreLow(jo.getDouble("TN_Inshore_Low"));
+      ret.setTNInshoreMedium(jo.getDouble("TN_Inshore_Medium"));
+      ret.setTNInshoreHigh(jo.getDouble("TN_Inshore_High"));
+      ret.setTNOffshoreLow(jo.getDouble("TN_Offshore_Low"));
+      ret.setTNOffshoreMedium(jo.getDouble("TN_Offshore_Medium"));
+      ret.setTNOffshoreHigh(jo.getDouble("TN_Offshore_High"));
+      ret.setTNDInshoreLow(jo.getDouble("TND_Inshore_Low"));
+      ret.setTNDInshoreMedium(jo.getDouble("TND_Inshore_Medium"));
+      ret.setTNDInshoreHigh(jo.getDouble("TND_Inshore_High"));
+      ret.setTNDOffshoreLow(jo.getDouble("TND_Offshore_Low"));
+      ret.setTNDOffshoreMedium(jo.getDouble("TND_Offshore_Medium"));
+      ret.setTNDOffshoreHigh(jo.getDouble("TND_Offshore_High"));
+      ORCAllowancesObj oao = new ORCAllowancesObj();
+      JSONObject allowances = jo.getJSONObject("Allowances");
+      oao.setWindSpeeds(JsonHelper.toList(allowances.getJSONArray("WindSpeeds")));
+      oao.setWindAngles(JsonHelper.toList(allowances.getJSONArray("WindAngles")));
+      oao.setBeat(JsonHelper.toList(allowances.getJSONArray("Beat")));
+      oao.setRun(JsonHelper.toList(allowances.getJSONArray("Run")));
+      oao.setBeatAngle(JsonHelper.toList(allowances.getJSONArray("BeatAngle")));
+      oao.setGybeAngle(JsonHelper.toList(allowances.getJSONArray("GybeAngle")));
+      oao.setWl(JsonHelper.toList(allowances.getJSONArray("WL")));
+      oao.setCr(JsonHelper.toList(allowances.getJSONArray("CR")));
+      oao.setOc(JsonHelper.toList(allowances.getJSONArray("OC")));
+      oao.setNs(JsonHelper.toList(allowances.getJSONArray("NS")));
+      oao.setOl(JsonHelper.toList(allowances.getJSONArray("OL")));
+      oao.setR52(JsonHelper.toList(allowances.getJSONArray("R52")));
+      oao.setR60(JsonHelper.toList(allowances.getJSONArray("R60")));
+      oao.setR75(JsonHelper.toList(allowances.getJSONArray("R75")));
+      oao.setR90(JsonHelper.toList(allowances.getJSONArray("R90")));
+      oao.setR110(JsonHelper.toList(allowances.getJSONArray("R110")));
+      oao.setR120(JsonHelper.toList(allowances.getJSONArray("R120")));
+      oao.setR135(JsonHelper.toList(allowances.getJSONArray("R135")));
+      oao.setR150(JsonHelper.toList(allowances.getJSONArray("R150")));
+      ret.setAllowances(oao);
+
+    }catch (Exception e){
+      Log.e(TAG,"Error converting json to cert",e);
+      return null;
+    }
+
+    return ret;
   }
 }
