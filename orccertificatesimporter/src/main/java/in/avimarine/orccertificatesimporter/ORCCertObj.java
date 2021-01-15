@@ -1,7 +1,8 @@
 package in.avimarine.orccertificatesimporter;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 

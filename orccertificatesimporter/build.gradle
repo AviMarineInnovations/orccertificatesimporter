@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 30
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -10,8 +10,8 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 27
+        minSdkVersion 18
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 

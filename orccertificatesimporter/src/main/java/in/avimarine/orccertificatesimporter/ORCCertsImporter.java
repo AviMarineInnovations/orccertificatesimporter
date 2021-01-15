@@ -1,6 +1,5 @@
 package in.avimarine.orccertificatesimporter;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
