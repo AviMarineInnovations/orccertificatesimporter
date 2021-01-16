@@ -60,7 +60,7 @@ public class ORCCertsImporter {
         }
       }
     };
-    rst.execute("http://data.orc.org/public/WPub.dll?action=DownBoatRMS&YachtName="+name+"&SailNo="+sailNo+"&CountryId="+countryId+"&ext=json");
+    rst.execute("https://data.orc.org/public/WPub.dll?action=DownBoatRMS&YachtName="+name+"&SailNo="+sailNo+"&CountryId="+countryId+"&ext=json");
   }
 
   static public void getCountries(final CountriesResponse cr) {
@@ -145,7 +145,7 @@ public class ORCCertsImporter {
         }
       }
     };
-    rst.execute("http://data.orc.org/public/WPub.dll?action=DownRMS&CountryId="+countryCode+"&ext=json");
+    rst.execute("https://data.orc.org/public/WPub.dll?action=DownRMS&CountryId="+countryCode+"&ext=json");
   }
 
 
