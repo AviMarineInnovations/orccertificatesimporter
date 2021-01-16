@@ -51,6 +51,20 @@ public class JsonHelper {
         }
         return list;
     }
+    public static List<Integer> toIntList(JSONArray array) throws JSONException {
+        List<Integer> list = new ArrayList();
+        for (int i = 0; i < array.length(); i++) {
+            list.add((Integer) fromJson(array.get(i)));
+        }
+        return list;
+    }
+    public static List<Double> toDoubleList(JSONArray array) throws JSONException {
+        List<Double> list = new ArrayList();
+        for (int i = 0; i < array.length(); i++) {
+            list.add(Double.valueOf(fromJson(array.get(i)).toString()));
+        }
+        return list;
+    }
 
     private static Object fromJson(Object json) throws JSONException {
         if (json == JSONObject.NULL) {

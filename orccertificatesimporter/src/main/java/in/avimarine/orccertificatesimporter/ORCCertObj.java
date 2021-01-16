@@ -8,6 +8,9 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -45,7 +48,7 @@ public class ORCCertObj {
   private double TNDInshoreLow;
   private double TNDInshoreMedium;
   private double TNDInshoreHigh;
-  private ORCAllowancesObj Allowances;
+  private Map<String, List<Double>> Allowances;
 
   public String getNatAuth() {
     return NatAuth;
@@ -271,11 +274,11 @@ public class ORCCertObj {
     this.TNDInshoreHigh = TNDInshoreHigh;
   }
 
-  public ORCAllowancesObj getAllowances() {
+  public Map<String, List<Double>> getAllowances() {
     return Allowances;
   }
 
-  public void setAllowances(ORCAllowancesObj allowances) {
+  public void setAllowances(Map<String, List<Double>> allowances) {
     Allowances = allowances;
   }
 
@@ -316,28 +319,28 @@ public class ORCCertObj {
       ret.setTNDOffshoreLow(jo.getDouble("TND_Offshore_Low"));
       ret.setTNDOffshoreMedium(jo.getDouble("TND_Offshore_Medium"));
       ret.setTNDOffshoreHigh(jo.getDouble("TND_Offshore_High"));
-      ORCAllowancesObj oao = new ORCAllowancesObj();
       JSONObject allowances = jo.getJSONObject("Allowances");
-      oao.setWindSpeeds(JsonHelper.toList(allowances.getJSONArray("WindSpeeds")));
-      oao.setWindAngles(JsonHelper.toList(allowances.getJSONArray("WindAngles")));
-      oao.setBeat(JsonHelper.toList(allowances.getJSONArray("Beat")));
-      oao.setRun(JsonHelper.toList(allowances.getJSONArray("Run")));
-      oao.setBeatAngle(JsonHelper.toList(allowances.getJSONArray("BeatAngle")));
-      oao.setGybeAngle(JsonHelper.toList(allowances.getJSONArray("GybeAngle")));
-      oao.setWl(JsonHelper.toList(allowances.getJSONArray("WL")));
-      oao.setCr(JsonHelper.toList(allowances.getJSONArray("CR")));
-      oao.setOc(JsonHelper.toList(allowances.getJSONArray("OC")));
-      oao.setNs(JsonHelper.toList(allowances.getJSONArray("NS")));
-      oao.setOl(JsonHelper.toList(allowances.getJSONArray("OL")));
-      oao.setR52(JsonHelper.toList(allowances.getJSONArray("R52")));
-      oao.setR60(JsonHelper.toList(allowances.getJSONArray("R60")));
-      oao.setR75(JsonHelper.toList(allowances.getJSONArray("R75")));
-      oao.setR90(JsonHelper.toList(allowances.getJSONArray("R90")));
-      oao.setR110(JsonHelper.toList(allowances.getJSONArray("R110")));
-      oao.setR120(JsonHelper.toList(allowances.getJSONArray("R120")));
-      oao.setR135(JsonHelper.toList(allowances.getJSONArray("R135")));
-      oao.setR150(JsonHelper.toList(allowances.getJSONArray("R150")));
-      ret.setAllowances(oao);
+      HashMap<String, List<Double>> map = new HashMap<String, List<Double>>();
+      map.put("WindSpeeds",JsonHelper.toDoubleList(allowances.getJSONArray("WindSpeeds")));
+      map.put("WindAngles",JsonHelper.toDoubleList(allowances.getJSONArray("WindAngles")));
+      map.put("Beat",JsonHelper.toDoubleList(allowances.getJSONArray("Beat")));
+      map.put("Run",JsonHelper.toDoubleList(allowances.getJSONArray("Run")));
+      map.put("BeatAngle",JsonHelper.toDoubleList(allowances.getJSONArray("BeatAngle")));
+      map.put("GybeAngle",JsonHelper.toDoubleList(allowances.getJSONArray("GybeAngle")));
+      map.put("WL",JsonHelper.toDoubleList(allowances.getJSONArray("WL")));
+      map.put("CR",JsonHelper.toDoubleList(allowances.getJSONArray("CR")));
+      map.put("OC",JsonHelper.toDoubleList(allowances.getJSONArray("OC")));
+      map.put("NS",JsonHelper.toDoubleList(allowances.getJSONArray("NS")));
+      map.put("OL",JsonHelper.toDoubleList(allowances.getJSONArray("OL")));
+      map.put("R52",JsonHelper.toDoubleList(allowances.getJSONArray("R52")));
+      map.put("R60",JsonHelper.toDoubleList(allowances.getJSONArray("R60")));
+      map.put("R75",JsonHelper.toDoubleList(allowances.getJSONArray("R75")));
+      map.put("R90",JsonHelper.toDoubleList(allowances.getJSONArray("R90")));
+      map.put("R110",JsonHelper.toDoubleList(allowances.getJSONArray("R110")));
+      map.put("R120",JsonHelper.toDoubleList(allowances.getJSONArray("R120")));
+      map.put("R135",JsonHelper.toDoubleList(allowances.getJSONArray("R135")));
+      map.put("R150",JsonHelper.toDoubleList(allowances.getJSONArray("R150")));
+      ret.setAllowances(map);
 
     }catch (Exception e){
       Log.e(TAG,"Error converting json to cert",e);

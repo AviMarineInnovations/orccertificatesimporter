@@ -49,6 +49,6 @@ class ORCCertObjTest {
 
         Assert.assertEquals(1992,cert.getAgeYear());
         Assert.assertEquals(1.3298,cert.getTNOffshoreLow());
-        Assert.assertEquals(399.4, cert.getAllowances().getR75().get(0));
+        Assert.assertEquals(399.4, cert.getAllowances().getAllowances().get("R75").get(0));
     }
 }
