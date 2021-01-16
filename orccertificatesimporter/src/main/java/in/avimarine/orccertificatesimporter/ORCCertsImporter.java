@@ -73,7 +73,6 @@ public class ORCCertsImporter {
       @Override
       public void processFinish(String output) {
         String xml = output;
-        Log.d(TAG, xml);
         List<CountryObj> ret = new ArrayList<>();
         if (xml != null) {
           try {
@@ -83,18 +82,23 @@ public class ORCCertsImporter {
             Document doc = dBuilder.parse(is);
             Element element = doc.getDocumentElement();
             element.normalize();
+//            NodeList data = doc.getElementsByTagName("DATA");
             NodeList nList = doc.getElementsByTagName("ROW");
             for (int i = 0; i < nList.getLength(); i++) {
               CountryObj co = new CountryObj();
               Node node = nList.item(i);
               if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element2 = (Element) node;
-                co.setId(getValue("CountryId", element2));
+                String countryId = getValue("CountryId", element2);
+                if (countryId==null){
+                  continue;
+                }
+                co.setId(countryId);
                 co.setName(getValue("CountryName", element2));
                 Date date1=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS").parse(getValue("LastUpdate",element2));
                 co.setLastUpdate(date1);
                 co.setCertificatesCount(Integer.valueOf(getValue("CertCount", element2)));
-                co.setClubCertCount(Integer.valueOf(getValue("ClubCert", element2)));
+//                co.setClubCertCount(Integer.valueOf(getValue("ClubCert", element2)));
               }
               ret.add(co);
             }
@@ -106,7 +110,7 @@ public class ORCCertsImporter {
         }
       }
     };
-    rst.execute("http://data.orc.org/public/WPub.dll");
+    rst.execute("https://data.orc.org/public/WPub.dll");
   }
 
   static public void getCertsByCountry(String countryCode, final CertsResponse cr) {
@@ -146,9 +150,15 @@ public class ORCCertsImporter {
 
 
   private static String getValue(String tag, Element element) {
+    if (element==null)
+      return null;
+    try {
     NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
     Node node = nodeList.item(0);
     return node.getNodeValue();
+    } catch (Exception e){
+      return null;
+    }
   }
 
 }
